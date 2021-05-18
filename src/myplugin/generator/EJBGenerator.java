@@ -17,7 +17,7 @@ import myplugin.generator.options.GeneratorOptions;
  * EJB generator that now generates incomplete ejb classes based on MagicDraw
  * class model
  * 
- * @ToDo: enhance resources/templates/ejbclass.ftl template and intermediate
+ * @ToDo: enhance resources/templates/jpaclass.ftl template and intermediate
  *        data structure (@see myplugin.generator.fmmodel) in order to generate
  *        complete ejb classes
  */

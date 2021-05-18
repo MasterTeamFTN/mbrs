@@ -3,6 +3,7 @@ package myplugin.analyzer;
 import java.util.Iterator;
 import java.util.List;
 
+import com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype;
 import myplugin.generator.fmmodel.FMClass;
 import myplugin.generator.fmmodel.FMEnumeration;
 import myplugin.generator.fmmodel.FMModel;
@@ -109,6 +110,15 @@ public class ModelAnalyzer {
 		
 		/** @ToDo:
 		 * Add import declarations etc. */		
+		
+		// TODO: Ovo se koristi za preuzimanje stereoptipova
+		// TODO: Treba napraviti getTagValue metodu
+//		String tableName = null;
+//		Stereotype entityStereotype = StereotypesHelper.getAppliedStereotypeByString(cl, "Entity");
+//		if (entityStereotype != null) {
+//			tableName = getTagValue(cl, entityStereotype, "tableName");
+//		}
+		
 		return fmClass;
 	}
 	
