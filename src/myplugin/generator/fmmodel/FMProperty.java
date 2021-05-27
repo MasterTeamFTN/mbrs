@@ -22,7 +22,7 @@ public class FMProperty extends FMElement  {
 		this.visibility = visibility;
 		
 		this.lower = lower;
-		this.upper = upper;		
+		this.upper = upper;
 	}
 	
 	public String getType() {
