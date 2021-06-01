@@ -20,6 +20,7 @@ import myplugin.analyzer.AnalyzeException;
 import myplugin.analyzer.ModelAnalyzer;
 import myplugin.generator.EJBGenerator;
 import myplugin.generator.ModelGenerator;
+import myplugin.generator.ServiceGenerator;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.options.GeneratorOptions;
 import myplugin.generator.options.ProjectOptions;
@@ -27,27 +28,28 @@ import myplugin.generator.options.ProjectOptions;
 /** Action that activate code generation */
 @SuppressWarnings("serial")
 class GenerateAction extends MDAction{
-	
-	
 	public GenerateAction(String name) {			
 		super("", name, null, null);		
 	}
 
 	public void actionPerformed(ActionEvent evt) {
-		
 		if (Application.getInstance().getProject() == null) return;
 		Package root = Application.getInstance().getProject().getModel();
-		
 		if (root == null) return;
 	
 		ModelAnalyzer analyzer = new ModelAnalyzer(root, "uns.ftn.mbrs.model");
 		
 		try {
 			analyzer.prepareModel();	
-			GeneratorOptions go = ProjectOptions.getProjectOptions().getGeneratorOptions().get("ModelLayerGenerator");
-			ModelGenerator generator = new ModelGenerator(go);
-			generator.generate();
-			/**  @ToDo: Also call other generators */ 
+//			GeneratorOptions go = ProjectOptions.getProjectOptions().getGeneratorOptions().get("ModelLayerGenerator");
+//			ModelGenerator generator = new ModelGenerator(go);
+//			generator.generate();
+			/**  @ToDo: Also call other generators */
+
+			GeneratorOptions go = ProjectOptions.getProjectOptions().getGeneratorOptions().get("ServiceLayerGenerator");
+			ServiceGenerator serviceGenerator = new ServiceGenerator(go);
+			serviceGenerator.generate();
+
 			JOptionPane.showMessageDialog(null, "Code is successfully generated! Generated code is in folder: " + go.getOutputPath() +
 					                         ", package: " + go.getFilePackage());
 			exportToXml();
@@ -58,8 +60,7 @@ class GenerateAction extends MDAction{
 	
 	private void exportToXml() {
 		if (JOptionPane.showConfirmDialog(null, "Do you want to save FM Model?") == 
-			JOptionPane.OK_OPTION)
-		{	
+			JOptionPane.OK_OPTION) {
 			JFileChooser jfc = new JFileChooser();
 			if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 				String fileName = jfc.getSelectedFile().getAbsolutePath();

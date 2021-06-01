@@ -35,10 +35,11 @@ public class MyPlugin extends com.nomagic.magicdraw.plugins.Plugin {
 //		ejbOptions.setTemplateDir(pluginDir + File.separator + ejbOptions.getTemplateDir()); //apsolutna putanja
 //		modelOptions();
 
-		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/java", "jpa_model", "templates", "{0}.java", true, "uns.ftn.mbrs.model");
-		ProjectOptions.getProjectOptions().getGeneratorOptions().put("ModelLayerGenerator", generatorOptions);
-		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
+//		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/java", "jpa_model", "templates", "{0}.java", true, "uns.ftn.mbrs.model");
+//		ProjectOptions.getProjectOptions().getGeneratorOptions().put("ModelLayerGenerator", generatorOptions);
+//		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
 
+		serviceOptions();
 	}
 
 //	private void modelOptions() {
@@ -47,8 +48,13 @@ public class MyPlugin extends com.nomagic.magicdraw.plugins.Plugin {
 //		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
 //	}
 
-	private NMAction[] getSubmenuActions()
-	{
+	private void serviceOptions() {
+		GeneratorOptions generatorOptions = new GeneratorOptions("c:/temp/mbrs/mbrs/src/main/java", "service", "templates", "{0}.java", true, "uns.ftn.mbrs.services");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("ServiceLayerGenerator", generatorOptions);
+		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
+	}
+
+	private NMAction[] getSubmenuActions() {
 	   return new NMAction[]{
 			new GenerateAction("Generate"),
 	   };
