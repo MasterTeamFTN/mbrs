@@ -17,12 +17,16 @@ import importedPackage;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-${class.visibility} class ${class.name} {  
-<#list properties as property>
+${class.visibility} class ${class.name} {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
 
-	<#if property.upper == 1 >
+<#list properties as property>
+    <#if property.upper == 1 >
+
     @Column(name="${property.name}")
-      ${property.visibility} ${property.type} ${property.name};
+    ${property.visibility} ${property.type} ${property.name};
 
     <#elseif property.upper == -1 >
     @OneToMany(mappedBy="${class.name}")
@@ -30,7 +34,7 @@ ${class.visibility} class ${class.name} {
 
     <#else>
     <#list 1..property.upper as i>
-      @Column(name="${property.name}${i}")
+        @Column(name="${property.name}${i}")
       ${property.visibility} ${property.type} ${property.name}${i};
     </#list>
     </#if>     
