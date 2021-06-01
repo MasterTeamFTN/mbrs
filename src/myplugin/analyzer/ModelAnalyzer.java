@@ -139,9 +139,14 @@ public class ModelAnalyzer {
 			
 		int lower = p.getLower();
 		int upper = p.getUpper();
+
+		boolean reference = false;
+		if(p.getAssociation() != null) {	// p = com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Property()
+			reference = true;
+		}
 		
 		FMProperty prop = new FMProperty(attName, typeName, p.getVisibility().toString(), 
-				lower, upper);
+				lower, upper, reference);
 		return prop;		
 	}	
 	

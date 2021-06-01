@@ -21,7 +21,7 @@
 	
 	<target name="compile">
 		<mkdir dir="bin"/>
-		<javac target="1.7" source="1.7" debug="yes" destdir="bin" srcdir="src" classpathref="all-libs"/>
+		<javac includeantruntime="false" target="1.7" source="1.7" debug="yes" destdir="bin" srcdir="src" classpathref="all-libs"/>
 	</target>
 	
 	<target name="build" depends="compile">

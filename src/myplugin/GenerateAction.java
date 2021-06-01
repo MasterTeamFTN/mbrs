@@ -20,6 +20,7 @@ import myplugin.analyzer.AnalyzeException;
 import myplugin.analyzer.ModelAnalyzer;
 import myplugin.generator.EJBGenerator;
 import myplugin.generator.RepositoryGenerator;
+import myplugin.generator.ModelGenerator;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.options.GeneratorOptions;
 import myplugin.generator.options.ProjectOptions;
@@ -40,28 +41,45 @@ class GenerateAction extends MDAction{
 
 		if (root == null) return;
 
-		ModelAnalyzer analyzer = new ModelAnalyzer(root, "ejebiga");
+		ModelAnalyzer analyzer = null;
+		GeneratorOptions generatorOptions = null;
 
 		try {
-			analyzer.prepareModel();
-			GeneratorOptions go = ProjectOptions.getProjectOptions().getGeneratorOptions().get("EJBGenerator");
-			EJBGenerator generator = new EJBGenerator(go);
-			generator.generate();
-			GeneratorOptions goReopository = ProjectOptions.getProjectOptions().getGeneratorOptions().get("RepositoryGenerator");
-			RepositoryGenerator repositoryGenerator = new RepositoryGenerator(goReopository);
-			repositoryGenerator.generate();
-			/**  @ToDo: Also call other generators */
-			JOptionPane.showMessageDialog(null, "Code is successfully generated! Generated code is in folder: " + go.getOutputPath() +
-					                         ", package: " + go.getFilePackage());
-			exportToXml();
+			generateModel(analyzer, root, generatorOptions);
+			generateRepositories(analyzer, root, generatorOptions);
+
 		} catch (AnalyzeException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 	}
 
+	private void generateModel(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions)
+			throws AnalyzeException {
+		analyzer = new ModelAnalyzer(root, "uns.ftn.mbrs.model");
+		analyzer.prepareModel();
+		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("ModelLayerGenerator");
+		ModelGenerator generator = new ModelGenerator(generatorOptions);
+		generator.generate();
+		JOptionPane.showMessageDialog(null, "(MODEL): Code is successfully generated! Generated code is in folder: "
+				+ generatorOptions.getOutputPath() + ", package: " + generatorOptions.getFilePackage());
+		exportToXml();
+	}
+
+	private void generateRepositories(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions)
+			throws AnalyzeException {
+		analyzer = new ModelAnalyzer(root, "uns.ftn.mbrs.repository");
+		analyzer.prepareModel();
+		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("RepositoryGenerator");
+		RepositoryGenerator repositoryGenerator = new RepositoryGenerator(generatorOptions);
+		repositoryGenerator.generate();
+		JOptionPane.showMessageDialog(null, "(REPOSITORY): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
+				", package: " + generatorOptions.getFilePackage());
+		exportToXml();
+	}
+
 	private void exportToXml() {
 		if (JOptionPane.showConfirmDialog(null, "Do you want to save FM Model?") ==
-			JOptionPane.OK_OPTION)
+				JOptionPane.OK_OPTION)
 		{
 			JFileChooser jfc = new JFileChooser();
 			if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {

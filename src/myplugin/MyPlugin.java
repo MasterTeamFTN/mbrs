@@ -29,22 +29,34 @@ public class MyPlugin extends com.nomagic.magicdraw.plugins.Plugin {
 		 * ProjectOptions.xml and take ejb generator options */
 
 		//for test purpose only:
-		GeneratorOptions ejbOptions = new GeneratorOptions("c:/temp", "jpaclass", "templates", "{0}.java", true, "ejebiga");
-		ProjectOptions.getProjectOptions().getGeneratorOptions().put("EJBGenerator", ejbOptions);
+//		GeneratorOptions ejbOptions = new GeneratorOptions("c:/temp", "jpaclass", "templates", "{0}.java", true, "ejebiga");
+//		ProjectOptions.getProjectOptions().getGeneratorOptions().put("EJBGenerator", ejbOptions);
+//
+//		ejbOptions.setTemplateDir(pluginDir + File.separator + ejbOptions.getTemplateDir()); //apsolutna putanja
 
-		ejbOptions.setTemplateDir(pluginDir + File.separator + ejbOptions.getTemplateDir()); //apsolutna putanja
 
-		// REPOSITORY
-		GeneratorOptions generatorOptions = new GeneratorOptions("c:/temp", "repositoryclass", "templates", "{0}Repository.java", true, "ejebiga");
+		modelOptions();
+		repositoryOptions();
+
+	}
+
+	private void modelOptions() {
+		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/java", "jpa_model", "templates", "{0}.java", true, "uns.ftn.mbrs.model");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("ModelLayerGenerator", generatorOptions);
+		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
+	}
+
+	private void repositoryOptions() {
+		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/java", "repositoryclass", "templates", "{0}Repository.java", true, "uns.ftn.mbrs.repository");
 		ProjectOptions.getProjectOptions().getGeneratorOptions().put("RepositoryGenerator", generatorOptions);
 		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
 	}
 
 	private NMAction[] getSubmenuActions()
 	{
-	   return new NMAction[]{
-			new GenerateAction("Generate"),
-	   };
+		return new NMAction[]{
+				new GenerateAction("Generate"),
+		};
 	}
 
 	public boolean close() {
