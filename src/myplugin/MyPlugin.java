@@ -29,11 +29,23 @@ public class MyPlugin extends com.nomagic.magicdraw.plugins.Plugin {
 		 * ProjectOptions.xml and take ejb generator options */
 		
 		//for test purpose only:
-		GeneratorOptions ejbOptions = new GeneratorOptions("c:/temp", "jpaclass", "templates", "{0}.java", true, "ejebiga");
-		ProjectOptions.getProjectOptions().getGeneratorOptions().put("EJBGenerator", ejbOptions);
-				
-		ejbOptions.setTemplateDir(pluginDir + File.separator + ejbOptions.getTemplateDir()); //apsolutna putanja
+//		GeneratorOptions ejbOptions = new GeneratorOptions("c:/temp", "jpaclass", "templates", "{0}.java", true, "ejebiga");
+//		ProjectOptions.getProjectOptions().getGeneratorOptions().put("EJBGenerator", ejbOptions);
+//
+//		ejbOptions.setTemplateDir(pluginDir + File.separator + ejbOptions.getTemplateDir()); //apsolutna putanja
+//		modelOptions();
+
+		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/java", "jpa_model", "templates", "{0}.java", true, "uns.ftn.mbrs.model");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("ModelLayerGenerator", generatorOptions);
+		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
+
 	}
+
+//	private void modelOptions() {
+//		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/java", "modelclass", "templates", "{0}.java", true, "uns.ftn.mbrs.model");
+//		ProjectOptions.getProjectOptions().getGeneratorOptions().put("ModelLayerGenerator.java", generatorOptions);
+//		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
+//	}
 
 	private NMAction[] getSubmenuActions()
 	{

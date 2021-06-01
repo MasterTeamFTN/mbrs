@@ -10,19 +10,25 @@ public class FMProperty extends FMElement  {
 	private Integer lower;
 	//Multiplicity (upper value) 
 	private Integer upper;
+
+	// Added by: Janko
+	private Boolean reference; // True - u pitanju je referenca na neku drugu klasu
 	
 	/** @ToDo: Add length, precision, unique... whatever is needed for ejb class generation
 	 * Also, provide these meta-attributes or tags in the modeling languange metaclass or 
 	 * stereotype */
 
 	
-	public FMProperty(String name, String type, String visibility, int lower, int upper) {
+	public FMProperty(String name, String type, String visibility, int lower, int upper, Boolean reference) {
 		super(name);
 		this.type = type;
 		this.visibility = visibility;
 		
 		this.lower = lower;
 		this.upper = upper;
+
+		//Added by Janko
+		this.reference = reference;
 	}
 	
 	public String getType() {
@@ -53,4 +59,14 @@ public class FMProperty extends FMElement  {
 	public void setUpper(Integer upper) {
 		this.upper = upper;
 	}
+
+
+	public Boolean getReference() {
+		return reference;
+	}
+
+	public void setReference(Boolean reference) {
+		this.reference = reference;
+	}
+
 }
