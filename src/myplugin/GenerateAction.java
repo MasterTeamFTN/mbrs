@@ -18,9 +18,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import myplugin.analyzer.AnalyzeException;
 import myplugin.analyzer.ModelAnalyzer;
-import myplugin.generator.EJBGenerator;
-import myplugin.generator.ModelGenerator;
-import myplugin.generator.ServiceGenerator;
+import myplugin.generator.*;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.options.GeneratorOptions;
 import myplugin.generator.options.ProjectOptions;
@@ -33,53 +31,61 @@ class GenerateAction extends MDAction{
 	}
 
 	public void actionPerformed(ActionEvent evt) {
+
 		if (Application.getInstance().getProject() == null) return;
 		Package root = Application.getInstance().getProject().getModel();
-		if (root == null) return;
-	
-		ModelAnalyzer analyzer = new ModelAnalyzer(root, "uns.ftn.mbrs.model");
-		
-		try {
-			analyzer.prepareModel();	
-//			GeneratorOptions go = ProjectOptions.getProjectOptions().getGeneratorOptions().get("ModelLayerGenerator");
-//			ModelGenerator generator = new ModelGenerator(go);
-//			generator.generate();
-			/**  @ToDo: Also call other generators */
 
-			GeneratorOptions go = ProjectOptions.getProjectOptions().getGeneratorOptions().get("ServiceLayerGenerator");
-			ServiceGenerator serviceGenerator = new ServiceGenerator(go);
+		if (root == null) return;
+
+		ModelAnalyzer analyzer = new ModelAnalyzer(root, "ejebiga");
+
+		try {
+			analyzer.prepareModel();
+			GeneratorOptions goModel = ProjectOptions.getProjectOptions().getGeneratorOptions().get("ModelLayerGenerator");
+			ModelGenerator generator = new ModelGenerator(goModel);
+			generator.generate();
+
+			GeneratorOptions goReopository = ProjectOptions.getProjectOptions().getGeneratorOptions().get("RepositoryGenerator");
+			RepositoryGenerator repositoryGenerator = new RepositoryGenerator(goReopository);
+			repositoryGenerator.generate();
+
+			GeneratorOptions goService = ProjectOptions.getProjectOptions().getGeneratorOptions().get("ServiceLayerGenerator");
+			ServiceGenerator serviceGenerator = new ServiceGenerator(goService);
 			serviceGenerator.generate();
 
-			JOptionPane.showMessageDialog(null, "Code is successfully generated! Generated code is in folder: " + go.getOutputPath() +
-					                         ", package: " + go.getFilePackage());
-			exportToXml();
+			GeneratorOptions goController = ProjectOptions.getProjectOptions().getGeneratorOptions().get("ControllerLayerGenerator");
+			ControllerGenerator controllerGenerator = new ControllerGenerator(goController);
+			controllerGenerator.generate();
+
+			JOptionPane.showMessageDialog(null, "Code is successfully generated! Generated code is in folder: " + goModel.getOutputPath());
+//			exportToXml();
 		} catch (AnalyzeException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
-		} 			
+		}
 	}
-	
+
 	private void exportToXml() {
-		if (JOptionPane.showConfirmDialog(null, "Do you want to save FM Model?") == 
-			JOptionPane.OK_OPTION) {
+		if (JOptionPane.showConfirmDialog(null, "Do you want to save FM Model?") ==
+			JOptionPane.OK_OPTION)
+		{
 			JFileChooser jfc = new JFileChooser();
 			if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 				String fileName = jfc.getSelectedFile().getAbsolutePath();
-			
+
 				XStream xstream = new XStream(new DomDriver());
-				BufferedWriter out;		
+				BufferedWriter out;
 				try {
 					out = new BufferedWriter(new OutputStreamWriter(
-							new FileOutputStream(fileName), "UTF8"));					
+							new FileOutputStream(fileName), "UTF8"));
 					xstream.toXML(FMModel.getInstance().getClasses(), out);
 					xstream.toXML(FMModel.getInstance().getEnumerations(), out);
-					
-				} catch (UnsupportedEncodingException e) {
-					JOptionPane.showMessageDialog(null, e.getMessage());				
-				} catch (FileNotFoundException e) {
-					JOptionPane.showMessageDialog(null, e.getMessage());				
-				}		             
-			}
-		}	
-	}	  
 
+				} catch (UnsupportedEncodingException e) {
+					JOptionPane.showMessageDialog(null, e.getMessage());
+				} catch (FileNotFoundException e) {
+					JOptionPane.showMessageDialog(null, e.getMessage());
+				}
+			}
+		}
+	}
 }

@@ -13,44 +13,57 @@ import com.nomagic.magicdraw.actions.ActionsConfiguratorsManager;
 
 /** MagicDraw plugin that performes code generation */
 public class MyPlugin extends com.nomagic.magicdraw.plugins.Plugin {
-	
-	String pluginDir = null; 
-	
+
+	String pluginDir = null;
+
 	public void init() {
 		JOptionPane.showMessageDialog( null, "My Plugin init");
-		
+
 		pluginDir = getDescriptor().getPluginDirectory().getPath();
-		
-		// Creating submenu in the MagicDraw main menu 	
-		ActionsConfiguratorsManager manager = ActionsConfiguratorsManager.getInstance();		
+
+		// Creating submenu in the MagicDraw main menu
+		ActionsConfiguratorsManager manager = ActionsConfiguratorsManager.getInstance();
 		manager.addMainMenuConfigurator(new MainMenuConfigurator(getSubmenuActions()));
-		
-		/** @Todo: load project options (@see myplugin.generator.options.ProjectOptions) from 
+
+		/** @Todo: load project options (@see myplugin.generator.options.ProjectOptions) from
 		 * ProjectOptions.xml and take ejb generator options */
-		
+
 		//for test purpose only:
 //		GeneratorOptions ejbOptions = new GeneratorOptions("c:/temp", "jpaclass", "templates", "{0}.java", true, "ejebiga");
 //		ProjectOptions.getProjectOptions().getGeneratorOptions().put("EJBGenerator", ejbOptions);
-//
 //		ejbOptions.setTemplateDir(pluginDir + File.separator + ejbOptions.getTemplateDir()); //apsolutna putanja
-//		modelOptions();
 
 //		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/java", "jpa_model", "templates", "{0}.java", true, "uns.ftn.mbrs.model");
 //		ProjectOptions.getProjectOptions().getGeneratorOptions().put("ModelLayerGenerator", generatorOptions);
 //		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
 
+		modelOptions();
+		repositoryOptions();
 		serviceOptions();
+		controllerOptions();
 	}
 
-//	private void modelOptions() {
-//		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/java", "modelclass", "templates", "{0}.java", true, "uns.ftn.mbrs.model");
-//		ProjectOptions.getProjectOptions().getGeneratorOptions().put("ModelLayerGenerator.java", generatorOptions);
-//		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
-//	}
+	private void modelOptions() {
+		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/java", "jpa_model", "templates", "{0}.java", true, "uns.ftn.mbrs.model");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("ModelLayerGenerator", generatorOptions);
+		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
+	}
 
 	private void serviceOptions() {
-		GeneratorOptions generatorOptions = new GeneratorOptions("c:/temp/mbrs/mbrs/src/main/java", "service", "templates", "{0}.java", true, "uns.ftn.mbrs.services");
+		GeneratorOptions generatorOptions = new GeneratorOptions("c:/temp/mbrs/mbrs/src/main/java", "service", "templates", "{0}Service.java", true, "uns.ftn.mbrs.service");
 		ProjectOptions.getProjectOptions().getGeneratorOptions().put("ServiceLayerGenerator", generatorOptions);
+		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
+	}
+
+	private void repositoryOptions() {
+		GeneratorOptions generatorOptions = new GeneratorOptions("c:/temp/mbrs/mbrs/src/main/java", "repositoryclass", "templates", "{0}Repository.java", true, "uns.ftn.mbrs.repository");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("RepositoryGenerator", generatorOptions);
+		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
+	}
+
+	private void controllerOptions() {
+		GeneratorOptions generatorOptions = new GeneratorOptions("c:/temp/mbrs/mbrs/src/main/java", "controller", "templates", "{0}Controller.java", true, "uns.ftn.mbrs.controller");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("ControllerLayerGenerator", generatorOptions);
 		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
 	}
 
@@ -59,14 +72,12 @@ public class MyPlugin extends com.nomagic.magicdraw.plugins.Plugin {
 			new GenerateAction("Generate"),
 	   };
 	}
-	
+
 	public boolean close() {
 		return true;
 	}
-	
-	public boolean isSupported() {				
+
+	public boolean isSupported() {
 		return true;
 	}
 }
-
-

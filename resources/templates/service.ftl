@@ -22,4 +22,12 @@ public class ${class.name}GenService {
     public List<${class.name}> findAll() {
         return ${repositoryName}.findAll()
     }
+
+    <#list properties as property>
+        <#if property.name != "id" && property.name != "password" && property.upper == 1>
+    public List<${class.name}> findBy${property.name?cap_first}(${property.type} ${property.name}) {
+        return ${repositoryName}.findBy${property.name?cap_first}(${property.name});
+    }
+        </#if>
+    </#list>
 }
