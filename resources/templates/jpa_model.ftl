@@ -23,7 +23,7 @@ ${class.visibility} class ${class.name} {
 <#list properties as property>
     <#if property.upper == 1 >
         <#if property.reference==true>
-        <#--    Ako je reference true, to znaci da je ovo polje referenca na neku drugu klasu    -->
+    <#--    Ako je reference true, to znaci da je ovo polje referenca na neku drugu klasu    -->
             <#if property.referenceType =="shared" || property.referenceType =="composite" >
             <#--    Reference type (aggregation) se stavlja sa obe strane veze, Ovde se samo postavlja anotacija    -->
     @OneToOne
@@ -33,8 +33,8 @@ ${class.visibility} class ${class.name} {
         <#else>
     @Column(name="${property.name}")
         </#if>
-    <#-- Date se ispisuje kao date, zato ovde ova provera sa if property.type.name==date-->
-    <#--        ${property.visibility} <#if property.type.name == "date" > Date <#else>${property.type.name} </#if>  ${property.name};-->
+        <#-- Date se ispisuje kao date, zato ovde ova provera sa if property.type.name==date-->
+<#--        ${property.visibility} <#if property.type.name == "date" > Date <#else>${property.type.name} </#if>  ${property.name};-->
     ${property.visibility} <#if property.type.name == "date" > Date <#else>${property.type.name} </#if><#if property.name != "" > ${property.name} <#else> ${property.type.name?uncap_first}</#if>;
 
 
