@@ -13,26 +13,31 @@ import com.nomagic.magicdraw.actions.ActionsConfiguratorsManager;
 
 /** MagicDraw plugin that performes code generation */
 public class MyPlugin extends com.nomagic.magicdraw.plugins.Plugin {
-	
-	String pluginDir = null; 
-	
+
+	String pluginDir = null;
+
 	public void init() {
 		JOptionPane.showMessageDialog( null, "My Plugin init");
-		
+
 		pluginDir = getDescriptor().getPluginDirectory().getPath();
-		
-		// Creating submenu in the MagicDraw main menu 	
-		ActionsConfiguratorsManager manager = ActionsConfiguratorsManager.getInstance();		
+
+		// Creating submenu in the MagicDraw main menu
+		ActionsConfiguratorsManager manager = ActionsConfiguratorsManager.getInstance();
 		manager.addMainMenuConfigurator(new MainMenuConfigurator(getSubmenuActions()));
-		
-		/** @Todo: load project options (@see myplugin.generator.options.ProjectOptions) from 
+
+		/** @Todo: load project options (@see myplugin.generator.options.ProjectOptions) from
 		 * ProjectOptions.xml and take ejb generator options */
-		
+
 		//for test purpose only:
 		GeneratorOptions ejbOptions = new GeneratorOptions("c:/temp", "jpaclass", "templates", "{0}.java", true, "ejebiga");
 		ProjectOptions.getProjectOptions().getGeneratorOptions().put("EJBGenerator", ejbOptions);
-				
+
 		ejbOptions.setTemplateDir(pluginDir + File.separator + ejbOptions.getTemplateDir()); //apsolutna putanja
+
+		// REPOSITORY
+		GeneratorOptions generatorOptions = new GeneratorOptions("c:/temp", "repositoryclass", "templates", "{0}Repository.java", true, "ejebiga");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("RepositoryGenerator", generatorOptions);
+		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
 	}
 
 	private NMAction[] getSubmenuActions()
@@ -41,14 +46,12 @@ public class MyPlugin extends com.nomagic.magicdraw.plugins.Plugin {
 			new GenerateAction("Generate"),
 	   };
 	}
-	
+
 	public boolean close() {
 		return true;
 	}
-	
-	public boolean isSupported() {				
+
+	public boolean isSupported() {
 		return true;
 	}
 }
-
-
