@@ -21,6 +21,8 @@ import myplugin.analyzer.ModelAnalyzer;
 import myplugin.generator.EJBGenerator;
 import myplugin.generator.RepositoryGenerator;
 import myplugin.generator.ModelGenerator;
+import myplugin.generator.ServiceGenerator;
+import myplugin.generator.ControllerGenerator;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.options.GeneratorOptions;
 import myplugin.generator.options.ProjectOptions;
@@ -47,7 +49,8 @@ class GenerateAction extends MDAction{
 		try {
 			generateModel(analyzer, root, generatorOptions);
 			generateRepositories(analyzer, root, generatorOptions);
-
+			generateServices(analyzer, root, generatorOptions);
+			generateControllers(analyzer, root, generatorOptions);
 		} catch (AnalyzeException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
@@ -73,6 +76,30 @@ class GenerateAction extends MDAction{
 		RepositoryGenerator repositoryGenerator = new RepositoryGenerator(generatorOptions);
 		repositoryGenerator.generate();
 		JOptionPane.showMessageDialog(null, "(REPOSITORY): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
+				", package: " + generatorOptions.getFilePackage());
+		exportToXml();
+	}
+
+	private void generateServices(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions)
+		throws AnalyzeException {
+		analyzer = new ModelAnalyzer(root, "uns.ftn.mbrs.service");
+		analyzer.prepareModel();
+		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("ServiceLayerGenerator");
+		ServiceGenerator serviceGenerator = new ServiceGenerator(generatorOptions);
+		serviceGenerator.generate();
+		JOptionPane.showMessageDialog(null, "(SERVICE): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
+				", package: " + generatorOptions.getFilePackage());
+		exportToXml();
+	}
+
+	private void generateControllers(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions)
+		throws AnalyzeException {
+		analyzer = new ModelAnalyzer(root, "uns.ftn.mbrs.controller");
+		analyzer.prepareModel();
+		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("ControllerLayerGenerator");
+		ControllerGenerator controllerGenerator = new ControllerGenerator(generatorOptions);
+		controllerGenerator.generate();
+		JOptionPane.showMessageDialog(null, "(CONTROLLER): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
 				", package: " + generatorOptions.getFilePackage());
 		exportToXml();
 	}
