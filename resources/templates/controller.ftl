@@ -26,7 +26,7 @@ public class ${class.name}GenController {
     }
 
     @GetMapping
-    public String findById(Model model) {
+    public String findAll(Model model) {
         List<${class.name}> ${class.name?uncap_first}s = ${serviceName}.findAll();
         model.addAttribute("${class.name?uncap_first}s", ${class.name?uncap_first}s);
         return "all-${class.name?uncap_first}s";
