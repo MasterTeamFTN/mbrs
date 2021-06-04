@@ -15,8 +15,9 @@ import myplugin.generator.options.GeneratorOptions;
 
 public class ListFreemarkerGenerator extends BasicGenerator {
 
-    public ListFreemarkerGenerator(GeneratorOptions generatorOptions) {
+    public ListFreemarkerGenerator(GeneratorOptions generatorOptions, String outputPath) {
         super(generatorOptions);
+        super.setOutputPath(outputPath);
     }
 
     public void generate() {

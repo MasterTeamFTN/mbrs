@@ -17,8 +17,9 @@ import myplugin.generator.options.GeneratorOptions;
 
 public class ServiceGenerator extends BasicGenerator {
 
-	public ServiceGenerator(GeneratorOptions generatorOptions) {
+	public ServiceGenerator(GeneratorOptions generatorOptions, String outputPath) {
 		super(generatorOptions);
+		super.setOutputPath(outputPath);
 	}
 
 	public void generate() {

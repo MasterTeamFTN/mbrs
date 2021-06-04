@@ -16,8 +16,9 @@ import myplugin.generator.options.GeneratorOptions;
 
 public class RepositoryGenerator extends BasicGenerator {
 
-	public RepositoryGenerator(GeneratorOptions generatorOptions) {
+	public RepositoryGenerator(GeneratorOptions generatorOptions, String outputPath) {
 		super(generatorOptions);
+		super.setOutputPath(outputPath);
 	}
 
 	public void generate() {

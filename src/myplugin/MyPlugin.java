@@ -17,8 +17,6 @@ public class MyPlugin extends com.nomagic.magicdraw.plugins.Plugin {
 	String pluginDir = null;
 
 	public void init() {
-		JOptionPane.showMessageDialog( null, "My Plugin init");
-
 		pluginDir = getDescriptor().getPluginDirectory().getPath();
 
 		// Creating submenu in the MagicDraw main menu

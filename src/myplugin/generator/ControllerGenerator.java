@@ -17,8 +17,9 @@ import myplugin.generator.options.GeneratorOptions;
 
 public class ControllerGenerator extends BasicGenerator {
 
-	public ControllerGenerator(GeneratorOptions generatorOptions) {
+	public ControllerGenerator(GeneratorOptions generatorOptions, String outputPath) {
 		super(generatorOptions);
+		super.setOutputPath(outputPath);
 	}
 
 	public void generate() {
