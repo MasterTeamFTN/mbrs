@@ -9,6 +9,7 @@ import myplugin.generator.fmmodel.FMEnumeration;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.fmmodel.FMProperty;
 import myplugin.generator.fmmodel.FMType;
+import myplugin.generator.fmmodel.Page;
 
 import com.nomagic.uml2.ext.jmi.helpers.ModelHelper;
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper;
@@ -93,7 +94,8 @@ public class ModelAnalyzer {
 			}
 			
 			/** @ToDo:
-			  * Process other package elements, as needed */ 
+			  * Process other package elements, as needed */
+
 		}
 	}
 	
@@ -114,15 +116,44 @@ public class ModelAnalyzer {
 		
 		// TODO: Ovo se koristi za preuzimanje stereoptipova
 		// TODO: Treba napraviti getTagValue metodu
-//		String tableName = null;
-//		Stereotype entityStereotype = StereotypesHelper.getAppliedStereotypeByString(cl, "Entity");
-//		if (entityStereotype != null) {
-//			tableName = getTagValue(cl, entityStereotype, "tableName");
-//		}
+		Stereotype pageStereotype = StereotypesHelper.getAppliedStereotypeByString(cl, "Page");
+		if (pageStereotype != null) {
+			Boolean create = true;
+			Boolean update = true;
+			Boolean getAll = true;
+			Boolean details = true;
+
+			List<Property> tags = pageStereotype.getOwnedAttribute();
+			for (int j = 0; j < tags.size(); ++j) {
+				Property tagDef = tags.get(j);
+				String tagName = tagDef.getName();
+				List value = StereotypesHelper.getStereotypePropertyValue(cl, pageStereotype, tagName);
+				if(value.size() > 0) {
+					switch(tagName) {
+						case "create":
+							create = (Boolean) value.get(0);
+							break;
+						case "update":
+							update = (Boolean) value.get(0);
+							break;
+						case "getAll":
+							getAll = (Boolean) value.get(0);
+							break;
+						case "details":
+							details = (Boolean) value.get(0);
+							break;
+					}
+				}
+			}
+			Page page = new Page(create, update, getAll, details);
+			fmClass.setPage(page);
+			System.out.println("Page(create, update, getAll, details): " +
+					create + " " + update + " " + getAll + " " + details);
+		}
 		
 		return fmClass;
 	}
-	
+
 	private FMProperty getPropertyData(Property p, Class cl) throws AnalyzeException {
 		String attName = p.getName();
 		if (attName == null) 

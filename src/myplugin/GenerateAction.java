@@ -23,6 +23,14 @@ import myplugin.generator.RepositoryGenerator;
 import myplugin.generator.ModelGenerator;
 import myplugin.generator.ServiceGenerator;
 import myplugin.generator.ControllerGenerator;
+import myplugin.generator.JspGenerator;
+import myplugin.generator.HomeJspGenerator;
+import myplugin.generator.DetailJspGenerator;
+
+import myplugin.generator.IndexFreemarkerGenerator;
+import myplugin.generator.DetailFreemarkerGenerator;
+import myplugin.generator.ListFreemarkerGenerator;
+
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.options.GeneratorOptions;
 import myplugin.generator.options.ProjectOptions;
@@ -51,6 +59,13 @@ class GenerateAction extends MDAction{
 			generateRepositories(analyzer, root, generatorOptions);
 			generateServices(analyzer, root, generatorOptions);
 			generateControllers(analyzer, root, generatorOptions);
+//			generateJsp(analyzer, root, generatorOptions);
+//			generateHome(analyzer, root, generatorOptions);
+//			generateDetails(analyzer, root, generatorOptions);
+			generateIndexFreemarker(analyzer, root, generatorOptions);
+			generateListFreemarker(analyzer, root, generatorOptions);
+			generateDetailsFreemarker(analyzer, root, generatorOptions);
+
 		} catch (AnalyzeException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
@@ -100,6 +115,77 @@ class GenerateAction extends MDAction{
 		ControllerGenerator controllerGenerator = new ControllerGenerator(generatorOptions);
 		controllerGenerator.generate();
 		JOptionPane.showMessageDialog(null, "(CONTROLLER): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
+				", package: " + generatorOptions.getFilePackage());
+		exportToXml();
+	}
+
+//	private void generateHome(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions)
+//			throws AnalyzeException {
+//		analyzer = new ModelAnalyzer(root, "WEB-INF");
+//		analyzer.prepareModel();
+//		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("HomeJspGenerator");
+//		HomeJspGenerator controllerGenerator = new HomeJspGenerator(generatorOptions);
+//		controllerGenerator.generate();
+//		JOptionPane.showMessageDialog(null, "(HOME JSP): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
+//				", package: " + generatorOptions.getFilePackage());
+//		exportToXml();
+//	}
+//
+//	private void generateJsp(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions)
+//			throws AnalyzeException {
+//		analyzer = new ModelAnalyzer(root, "WEB-INF.jsp.list");
+//		analyzer.prepareModel();
+//		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("JspGenerator");
+//		JspGenerator controllerGenerator = new JspGenerator(generatorOptions);
+//		controllerGenerator.generate();
+//		JOptionPane.showMessageDialog(null, "(JSP): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
+//				", package: " + generatorOptions.getFilePackage());
+//		exportToXml();
+//	}
+//
+//	private void generateDetails(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions)
+//			throws AnalyzeException {
+//		analyzer = new ModelAnalyzer(root, "WEB-INF.jsp.detail");
+//		analyzer.prepareModel();
+//		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("DetailJspGenerator");
+//		DetailJspGenerator controllerGenerator = new DetailJspGenerator(generatorOptions);
+//		controllerGenerator.generate();
+//		JOptionPane.showMessageDialog(null, "(DETAIL JSP): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
+//				", package: " + generatorOptions.getFilePackage());
+//		exportToXml();
+//	}
+
+
+	private void generateIndexFreemarker(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions)
+			throws AnalyzeException {
+		analyzer = new ModelAnalyzer(root, "templates");
+		analyzer.prepareModel();
+		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("IndexFreemarkerGenerator");
+		IndexFreemarkerGenerator controllerGenerator = new IndexFreemarkerGenerator(generatorOptions);
+		controllerGenerator.generate();
+		JOptionPane.showMessageDialog(null, "(INDEX FTL): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
+				", package: " + generatorOptions.getFilePackage());
+		exportToXml();
+	}
+	private void generateListFreemarker(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions)
+			throws AnalyzeException {
+		analyzer = new ModelAnalyzer(root, "templates");
+		analyzer.prepareModel();
+		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("ListFreemarkerGenerator");
+		ListFreemarkerGenerator controllerGenerator = new ListFreemarkerGenerator(generatorOptions);
+		controllerGenerator.generate();
+		JOptionPane.showMessageDialog(null, "(LIST FTL): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
+				", package: " + generatorOptions.getFilePackage());
+		exportToXml();
+	}
+	private void generateDetailsFreemarker(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions)
+			throws AnalyzeException {
+		analyzer = new ModelAnalyzer(root, "templates");
+		analyzer.prepareModel();
+		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("DetailFreemarkerGenerator");
+		DetailFreemarkerGenerator controllerGenerator = new DetailFreemarkerGenerator(generatorOptions);
+		controllerGenerator.generate();
+		JOptionPane.showMessageDialog(null, "(DETAIL FTL): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
 				", package: " + generatorOptions.getFilePackage());
 		exportToXml();
 	}
