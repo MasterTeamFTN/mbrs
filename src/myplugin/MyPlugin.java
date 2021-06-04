@@ -39,6 +39,12 @@ public class MyPlugin extends com.nomagic.magicdraw.plugins.Plugin {
 		repositoryOptions();
 		serviceOptions();
 		controllerOptions();
+//		jspOptions();
+//		homeJspOptions();
+//		detailJspOptions();
+		listFtlOptions();
+		indexFtlOptions();
+		detailFtlOptions();
 	}
 
 	private void modelOptions() {
@@ -65,6 +71,41 @@ public class MyPlugin extends com.nomagic.magicdraw.plugins.Plugin {
 		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
 	}
 
+//	private void jspOptions() {
+//		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/webapp", "list_jsp", "templates", "{0}s.jsp", true, "webapp");
+//		ProjectOptions.getProjectOptions().getGeneratorOptions().put("JspGenerator", generatorOptions);
+//		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
+//	}
+//
+//	private void homeJspOptions() {
+//		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/webapp", "home", "templates", "{0}.jsp", true, "webapp");
+//		ProjectOptions.getProjectOptions().getGeneratorOptions().put("HomeJspGenerator", generatorOptions);
+//		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
+//	}
+//
+//	private void detailJspOptions() {
+//		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/webapp", "details_jsp", "templates", "{0}.jsp", true, "web");
+//		ProjectOptions.getProjectOptions().getGeneratorOptions().put("DetailJspGenerator", generatorOptions);
+//		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
+//	}
+
+	private void listFtlOptions() {
+		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/resources", "list_page", "templates", "{0}s.ftl", true, "webapp");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("ListFreemarkerGenerator", generatorOptions);
+		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
+	}
+
+	private void indexFtlOptions() {
+		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/resources", "index_page", "templates", "{0}.ftl", true, "webapp");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("IndexFreemarkerGenerator", generatorOptions);
+		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
+	}
+
+	private void detailFtlOptions() {
+		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/resources", "details_page", "templates", "{0}.ftl", true, "web");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("DetailFreemarkerGenerator", generatorOptions);
+		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
+	}
 	private NMAction[] getSubmenuActions()
 	{
 		return new NMAction[]{
