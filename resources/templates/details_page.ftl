@@ -4,7 +4,7 @@
     <title>${class.name} Details</title>
 </head>
 <body>
-<#if class.page?? && class.page.details == true>
+<#if class.page?? && class.page.details?c=="true">
     <h1>${class.name} Details</h1>
     <div>
         <table border="1">
@@ -19,7 +19,7 @@
                 </tr>
             </#list>
         </table>
-        <#if class.page.create == true>
+        <#if class.page.update?c=="true">
         <a href="/${class.name?uncap_first}/update/${r"${"}${class.name?uncap_first}.id${r"}"}">Update ${class.name?uncap_first}</a>
         </#if>
     </div>

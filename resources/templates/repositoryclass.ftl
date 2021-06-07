@@ -11,9 +11,5 @@ import java.util.Date;
 
 @Repository
 public interface ${class.name}Repository extends JpaRepository<${class.name}, Long> {
-  <#list properties as property>
-		<#if property.name != "id" && property.name != "password" && property.upper == 1>
-	List<${class.name}> findBy${property.name?cap_first}(${property.type} ${property.name});
-		</#if>
- 	</#list>
+
 }

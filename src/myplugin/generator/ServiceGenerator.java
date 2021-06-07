@@ -37,21 +37,19 @@ public class ServiceGenerator extends BasicGenerator {
 
 			Map<String, Object> context = new HashMap<String, Object>();
 			ArrayList<String> imports = new ArrayList<>();
-			//uzmem sve importe koji su vezani za atribute
-			//paket.naziv_klase
 			String import_str = "";
 			try {
-				out = getWriter(cl.getName(), cl.getTypePackage());
-				if (out != null) {
-					context.clear();
-					context.put("class", cl);
-					context.put("properties", cl.getProperties());
-					context.put("importedPackages", cl.getImportedPackages());
-//					context.put("extendClass", cl.getBaseClassifier());
-					getTemplate().process(context, out);
-					out.flush();
+				if(cl.getPage() != null) {
+					out = getWriter(cl.getName(), cl.getTypePackage());
+					if (out != null) {
+						context.clear();
+						context.put("class", cl);
+						context.put("properties", cl.getProperties());
+						context.put("importedPackages", cl.getImportedPackages());
+						getTemplate().process(context, out);
+						out.flush();
+					}
 				}
-
 			} catch (TemplateException e) {
 				JOptionPane.showMessageDialog(null, e.getMessage());
 			} catch (IOException e) {

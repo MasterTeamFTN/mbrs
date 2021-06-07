@@ -16,19 +16,24 @@ import java.util.List;
 @RequestMapping("/${class.name?lower_case}")
 @RequiredArgsConstructor
 public class ${class.name}GenController {
+<#if class.page??>
     private final ${class.name?cap_first}GenService ${serviceName};
 
+    <#if class.page.details?c=="true">
     @GetMapping("/{id}")
     public String findById(Model model, @PathVariable Long id) {
         ${class.name} ${class.name?uncap_first} = ${serviceName}.findById(id);
         model.addAttribute("${class.name?uncap_first}", ${class.name?uncap_first});
         return "${class.name?uncap_first}-by-id";
     }
-
+    </#if>
+    <#if class.page.getAll?c=="true">
     @GetMapping
     public String findAll(Model model) {
         List<${class.name}> ${class.name?uncap_first}s = ${serviceName}.findAll();
         model.addAttribute("${class.name?uncap_first}s", ${class.name?uncap_first}s);
         return "all-${class.name?uncap_first}s";
     }
+    </#if>
+</#if>
 }

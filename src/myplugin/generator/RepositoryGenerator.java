@@ -35,14 +35,16 @@ public class RepositoryGenerator extends BasicGenerator {
 			Writer out;
 			Map<String, Object> context = new HashMap<String, Object>();
 			try {
-				out = getWriter(cl.getName(), cl.getTypePackage());
-				if (out != null) {
-					context.clear();
-					context.put("class", cl);
-					context.put("properties", cl.getProperties());
-					context.put("importedPackages", cl.getImportedPackages());
-					getTemplate().process(context, out);
-					out.flush();
+				if(cl.getPage() != null) {
+					out = getWriter(cl.getName(), cl.getTypePackage());
+					if (out != null) {
+						context.clear();
+						context.put("class", cl);
+						context.put("properties", cl.getProperties());
+						context.put("importedPackages", cl.getImportedPackages());
+						getTemplate().process(context, out);
+						out.flush();
+					}
 				}
 			} catch (TemplateException e) {
 				JOptionPane.showMessageDialog(null, e.getMessage());

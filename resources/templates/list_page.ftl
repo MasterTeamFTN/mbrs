@@ -4,7 +4,7 @@
     <title>${class.name} List</title>
 </head>
 <body>
-<#if class.page?? && class.page.getAll == true>
+<#if class.page?? && class.page.getAll?c=="true">
     <h1>${class.name} List</h1>
     <div>
         <table border="1">
@@ -25,7 +25,7 @@
                 </tr>
             ${r'</#list>'}
         </table>
-        <#if class.page.create == true>
+        <#if class.page.create?c=="true">
         <a href="/${class.name?uncap_first}/create">Create ${class.name?uncap_first}</a>
         </#if>
     </div>
