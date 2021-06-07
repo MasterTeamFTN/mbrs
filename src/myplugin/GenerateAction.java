@@ -18,7 +18,6 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import myplugin.analyzer.AnalyzeException;
 import myplugin.analyzer.ModelAnalyzer;
-import myplugin.generator.EJBGenerator;
 import myplugin.generator.RepositoryGenerator;
 import myplugin.generator.ModelGenerator;
 import myplugin.generator.ServiceGenerator;
@@ -54,69 +53,93 @@ class GenerateAction extends MDAction{
 		ModelAnalyzer analyzer = null;
 		GeneratorOptions generatorOptions = null;
 
+		String packageName = choosePackageName();
+		String outputPath = chooseOutputPath();
+		String javaOutputPath = outputPath + "/src/main/java";
+		String templatesOutputpath = outputPath + "/src/main/resources";
+
 		try {
-			generateModel(analyzer, root, generatorOptions);
-			generateRepositories(analyzer, root, generatorOptions);
-			generateServices(analyzer, root, generatorOptions);
-			generateControllers(analyzer, root, generatorOptions);
+			generateModel(analyzer, root, generatorOptions, packageName, javaOutputPath);
+			generateRepositories(analyzer, root, generatorOptions, packageName, javaOutputPath);
+			generateServices(analyzer, root, generatorOptions, packageName, javaOutputPath);
+			generateControllers(analyzer, root, generatorOptions, packageName, javaOutputPath);
 //			generateJsp(analyzer, root, generatorOptions);
 //			generateHome(analyzer, root, generatorOptions);
 //			generateDetails(analyzer, root, generatorOptions);
-			generateIndexFreemarker(analyzer, root, generatorOptions);
-			generateListFreemarker(analyzer, root, generatorOptions);
-			generateDetailsFreemarker(analyzer, root, generatorOptions);
+			generateIndexFreemarker(analyzer, root, generatorOptions, templatesOutputpath);
+			generateListFreemarker(analyzer, root, generatorOptions, templatesOutputpath);
+			generateDetailsFreemarker(analyzer, root, generatorOptions, templatesOutputpath);
 
+			JOptionPane.showMessageDialog(null, "Code is successfully generated! Generated code is in folder: "
+					+ outputPath + ", package: " + packageName);
 		} catch (AnalyzeException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 	}
 
-	private void generateModel(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions)
+	private String choosePackageName() {
+		return JOptionPane.showInputDialog("Enter package name");
+	}
+
+	private String chooseOutputPath() {
+		JFileChooser chooser = new JFileChooser();
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		int returnVal = chooser.showOpenDialog(null);
+		String path = "";
+
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			path = chooser.getSelectedFile().getAbsolutePath();
+		}
+
+		return path;
+	}
+
+	private void generateModel(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions, String packageName, String outputPath)
 			throws AnalyzeException {
-		analyzer = new ModelAnalyzer(root, "uns.ftn.mbrs.model");
+		analyzer = new ModelAnalyzer(root, packageName + ".model");
 		analyzer.prepareModel();
 		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("ModelLayerGenerator");
-		ModelGenerator generator = new ModelGenerator(generatorOptions);
+		ModelGenerator generator = new ModelGenerator(generatorOptions, outputPath);
 		generator.generate();
-		JOptionPane.showMessageDialog(null, "(MODEL): Code is successfully generated! Generated code is in folder: "
-				+ generatorOptions.getOutputPath() + ", package: " + generatorOptions.getFilePackage());
-		exportToXml();
+//		JOptionPane.showMessageDialog(null, "(MODEL): Code is successfully generated! Generated code is in folder: "
+//				+ generatorOptions.getOutputPath() + ", package: " + generatorOptions.getFilePackage());
+		// exportToXml();
 	}
 
-	private void generateRepositories(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions)
+	private void generateRepositories(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions, String packageName, String outputPath)
 			throws AnalyzeException {
-		analyzer = new ModelAnalyzer(root, "uns.ftn.mbrs.repository");
+		analyzer = new ModelAnalyzer(root, packageName + ".repository");
 		analyzer.prepareModel();
 		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("RepositoryGenerator");
-		RepositoryGenerator repositoryGenerator = new RepositoryGenerator(generatorOptions);
+		RepositoryGenerator repositoryGenerator = new RepositoryGenerator(generatorOptions, outputPath);
 		repositoryGenerator.generate();
-		JOptionPane.showMessageDialog(null, "(REPOSITORY): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
-				", package: " + generatorOptions.getFilePackage());
-		exportToXml();
+//		JOptionPane.showMessageDialog(null, "(REPOSITORY): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
+//				", package: " + generatorOptions.getFilePackage());
+//		exportToXml();
 	}
 
-	private void generateServices(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions)
+	private void generateServices(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions, String packageName, String outputPath)
 		throws AnalyzeException {
-		analyzer = new ModelAnalyzer(root, "uns.ftn.mbrs.service");
+		analyzer = new ModelAnalyzer(root, packageName + ".service");
 		analyzer.prepareModel();
 		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("ServiceLayerGenerator");
-		ServiceGenerator serviceGenerator = new ServiceGenerator(generatorOptions);
+		ServiceGenerator serviceGenerator = new ServiceGenerator(generatorOptions, outputPath);
 		serviceGenerator.generate();
-		JOptionPane.showMessageDialog(null, "(SERVICE): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
-				", package: " + generatorOptions.getFilePackage());
-		exportToXml();
+//		JOptionPane.showMessageDialog(null, "(SERVICE): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
+//				", package: " + generatorOptions.getFilePackage());
+//		exportToXml();
 	}
 
-	private void generateControllers(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions)
+	private void generateControllers(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions, String packageName, String outputPath)
 		throws AnalyzeException {
-		analyzer = new ModelAnalyzer(root, "uns.ftn.mbrs.controller");
+		analyzer = new ModelAnalyzer(root, packageName + ".controller");
 		analyzer.prepareModel();
 		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("ControllerLayerGenerator");
-		ControllerGenerator controllerGenerator = new ControllerGenerator(generatorOptions);
+		ControllerGenerator controllerGenerator = new ControllerGenerator(generatorOptions, outputPath);
 		controllerGenerator.generate();
-		JOptionPane.showMessageDialog(null, "(CONTROLLER): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
-				", package: " + generatorOptions.getFilePackage());
-		exportToXml();
+//		JOptionPane.showMessageDialog(null, "(CONTROLLER): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
+//				", package: " + generatorOptions.getFilePackage());
+//		exportToXml();
 	}
 
 //	private void generateHome(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions)
@@ -155,39 +178,40 @@ class GenerateAction extends MDAction{
 //		exportToXml();
 //	}
 
-
-	private void generateIndexFreemarker(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions)
+	private void generateIndexFreemarker(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions, String outputPath)
 			throws AnalyzeException {
 		analyzer = new ModelAnalyzer(root, "templates");
 		analyzer.prepareModel();
 		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("IndexFreemarkerGenerator");
-		IndexFreemarkerGenerator controllerGenerator = new IndexFreemarkerGenerator(generatorOptions);
+		IndexFreemarkerGenerator controllerGenerator = new IndexFreemarkerGenerator(generatorOptions, outputPath);
 		controllerGenerator.generate();
-		JOptionPane.showMessageDialog(null, "(INDEX FTL): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
-				", package: " + generatorOptions.getFilePackage());
-		exportToXml();
+//		JOptionPane.showMessageDialog(null, "(INDEX FTL): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
+//				", package: " + generatorOptions.getFilePackage());
+//		exportToXml();
 	}
-	private void generateListFreemarker(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions)
+
+	private void generateListFreemarker(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions, String outputPath)
 			throws AnalyzeException {
 		analyzer = new ModelAnalyzer(root, "templates");
 		analyzer.prepareModel();
 		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("ListFreemarkerGenerator");
-		ListFreemarkerGenerator controllerGenerator = new ListFreemarkerGenerator(generatorOptions);
+		ListFreemarkerGenerator controllerGenerator = new ListFreemarkerGenerator(generatorOptions, outputPath);
 		controllerGenerator.generate();
-		JOptionPane.showMessageDialog(null, "(LIST FTL): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
-				", package: " + generatorOptions.getFilePackage());
-		exportToXml();
+//		JOptionPane.showMessageDialog(null, "(LIST FTL): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
+//				", package: " + generatorOptions.getFilePackage());
+//		exportToXml();
 	}
-	private void generateDetailsFreemarker(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions)
+
+	private void generateDetailsFreemarker(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions, String outputPath)
 			throws AnalyzeException {
 		analyzer = new ModelAnalyzer(root, "templates");
 		analyzer.prepareModel();
 		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("DetailFreemarkerGenerator");
-		DetailFreemarkerGenerator controllerGenerator = new DetailFreemarkerGenerator(generatorOptions);
+		DetailFreemarkerGenerator controllerGenerator = new DetailFreemarkerGenerator(generatorOptions, outputPath);
 		controllerGenerator.generate();
-		JOptionPane.showMessageDialog(null, "(DETAIL FTL): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
-				", package: " + generatorOptions.getFilePackage());
-		exportToXml();
+//		JOptionPane.showMessageDialog(null, "(DETAIL FTL): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
+//				", package: " + generatorOptions.getFilePackage());
+//		exportToXml();
 	}
 
 	private void exportToXml() {

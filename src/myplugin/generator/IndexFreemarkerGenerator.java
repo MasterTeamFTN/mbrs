@@ -16,8 +16,9 @@ import myplugin.generator.options.GeneratorOptions;
 
 public class IndexFreemarkerGenerator extends BasicGenerator {
 
-    public IndexFreemarkerGenerator(GeneratorOptions generatorOptions) {
+    public IndexFreemarkerGenerator(GeneratorOptions generatorOptions, String outputPath) {
         super(generatorOptions);
+        super.setOutputPath(outputPath);
     }
 
     public void generate() {

@@ -17,8 +17,9 @@ import myplugin.generator.options.GeneratorOptions;
 
 public class ModelGenerator extends BasicGenerator {
 
-	public ModelGenerator(GeneratorOptions generatorOptions) {
+	public ModelGenerator(GeneratorOptions generatorOptions, String outputPath) {
 		super(generatorOptions);
+		super.setOutputPath(outputPath);
 	}
 
 	public void generate() {
