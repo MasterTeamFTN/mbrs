@@ -43,6 +43,8 @@ public class MyPlugin extends com.nomagic.magicdraw.plugins.Plugin {
 		listFtlOptions();
 		indexFtlOptions();
 		detailFtlOptions();
+		editFtlOptions();
+		createFtlOptions();
 	}
 
 	private void modelOptions() {
@@ -102,6 +104,16 @@ public class MyPlugin extends com.nomagic.magicdraw.plugins.Plugin {
 	private void detailFtlOptions() {
 		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/resources", "details_page", "templates", "{0}.ftl", true, "web");
 		ProjectOptions.getProjectOptions().getGeneratorOptions().put("DetailFreemarkerGenerator", generatorOptions);
+		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
+	}
+	private void editFtlOptions() {
+		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/resources", "edit_page", "templates", "Edit{0}.ftl", true, "web");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("EditFreemarkerGenerator", generatorOptions);
+		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
+	}
+	private void createFtlOptions() {
+		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/resources", "add_page", "templates", "Create{0}.ftl", true, "web");
+		ProjectOptions.getProjectOptions().getGeneratorOptions().put("CreateFreemarkerGenerator", generatorOptions);
 		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
 	}
 	private NMAction[] getSubmenuActions()
