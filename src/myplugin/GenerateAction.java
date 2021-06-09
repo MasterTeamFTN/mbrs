@@ -18,18 +18,11 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import myplugin.analyzer.AnalyzeException;
 import myplugin.analyzer.ModelAnalyzer;
-import myplugin.generator.RepositoryGenerator;
-import myplugin.generator.ModelGenerator;
-import myplugin.generator.ServiceGenerator;
-import myplugin.generator.ControllerGenerator;
-import myplugin.generator.JspGenerator;
-import myplugin.generator.HomeJspGenerator;
+import myplugin.generator.*;
+
 import myplugin.generator.DetailJspGenerator;
-
-import myplugin.generator.IndexFreemarkerGenerator;
-import myplugin.generator.DetailFreemarkerGenerator;
-import myplugin.generator.ListFreemarkerGenerator;
-
+import myplugin.generator.HomeJspGenerator;
+import myplugin.generator.JspGenerator;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.options.GeneratorOptions;
 import myplugin.generator.options.ProjectOptions;
@@ -69,6 +62,8 @@ class GenerateAction extends MDAction{
 			generateIndexFreemarker(analyzer, root, generatorOptions, templatesOutputpath);
 			generateListFreemarker(analyzer, root, generatorOptions, templatesOutputpath);
 			generateDetailsFreemarker(analyzer, root, generatorOptions, templatesOutputpath);
+			generateEditFreemarker(analyzer, root, generatorOptions, templatesOutputpath);
+			generateCreateFreemarker(analyzer, root, generatorOptions, templatesOutputpath);
 
 			JOptionPane.showMessageDialog(null, "Code is successfully generated! Generated code is in folder: "
 					+ outputPath + ", package: " + packageName);
@@ -208,6 +203,28 @@ class GenerateAction extends MDAction{
 		analyzer.prepareModel();
 		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("DetailFreemarkerGenerator");
 		DetailFreemarkerGenerator controllerGenerator = new DetailFreemarkerGenerator(generatorOptions, outputPath);
+		controllerGenerator.generate();
+//		JOptionPane.showMessageDialog(null, "(DETAIL FTL): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
+//				", package: " + generatorOptions.getFilePackage());
+//		exportToXml();
+	}
+	private void generateEditFreemarker(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions, String outputPath)
+			throws AnalyzeException {
+		analyzer = new ModelAnalyzer(root, "templates");
+		analyzer.prepareModel();
+		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("EditFreemarkerGenerator");
+		EditFreemarkerGenerator controllerGenerator = new EditFreemarkerGenerator(generatorOptions, outputPath);
+		controllerGenerator.generate();
+//		JOptionPane.showMessageDialog(null, "(DETAIL FTL): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
+//				", package: " + generatorOptions.getFilePackage());
+//		exportToXml();
+	}
+	private void generateCreateFreemarker(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions, String outputPath)
+			throws AnalyzeException {
+		analyzer = new ModelAnalyzer(root, "templates");
+		analyzer.prepareModel();
+		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("CreateFreemarkerGenerator");
+		CreateFreemarkerGenerator controllerGenerator = new CreateFreemarkerGenerator(generatorOptions, outputPath);
 		controllerGenerator.generate();
 //		JOptionPane.showMessageDialog(null, "(DETAIL FTL): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
 //				", package: " + generatorOptions.getFilePackage());
