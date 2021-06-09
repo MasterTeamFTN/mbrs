@@ -27,12 +27,26 @@ public class ${class.name}GenController {
         return "${class.name?uncap_first}-by-id";
     }
     </#if>
+
     <#if class.page.getAll?c=="true">
     @GetMapping
     public String findAll(Model model) {
         List<${class.name}> ${class.name?uncap_first}s = ${serviceName}.findAll();
         model.addAttribute("${class.name?uncap_first}s", ${class.name?uncap_first}s);
         return "all-${class.name?uncap_first}s";
+    }
+    </#if>
+
+    <#if class.page.getAll?c=="true">
+    @PostMapping("/add")
+    public String create(@ModelAttribute ${class.name}(${class.name?uncap_first}) ${class.name?uncap_first}, BindingResult result, ModelMap model) {
+        if (result.hasErrors()) {
+            return "error";
+        }
+
+        ${class.name} result = ${serviceName}.save(${class.name?uncap_first});
+        model.addAttribute("${class.name?uncap_first}", result);
+        return "${class.name?uncap_first}-by-id";
     }
     </#if>
 </#if>

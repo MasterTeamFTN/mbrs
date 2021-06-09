@@ -26,6 +26,13 @@ public class ${class.name}GenService {
     public List<${class.name}> findAll() {
         return ${repositoryName}.findAll()
     }
+
+</#if>
+<#if class.page.create?c=="true">
+    public ${class.name} save(${class.name} ${class.name?uncap_first}) {
+        return ${repositoryName}.save(${class.name?uncap_first})
+    }
+
 </#if>
 </#if>
 }
