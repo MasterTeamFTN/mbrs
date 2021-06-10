@@ -4,6 +4,7 @@
     <title>Create ${class.name}</title>
 </head>
 <body>
+<a href="javascript:history.back()">back</a>
 <#if class.page?? && class.page.create?c=="true">
     <div>
         <fieldset>

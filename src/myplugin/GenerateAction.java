@@ -132,9 +132,6 @@ class GenerateAction extends MDAction{
 		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("ControllerLayerGenerator");
 		ControllerGenerator controllerGenerator = new ControllerGenerator(generatorOptions, outputPath);
 		controllerGenerator.generate();
-//		JOptionPane.showMessageDialog(null, "(CONTROLLER): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
-//				", package: " + generatorOptions.getFilePackage());
-//		exportToXml();
 	}
 
 //	private void generateHome(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions)
@@ -230,6 +227,7 @@ class GenerateAction extends MDAction{
 //				", package: " + generatorOptions.getFilePackage());
 //		exportToXml();
 	}
+
 
 	private void exportToXml() {
 		if (JOptionPane.showConfirmDialog(null, "Do you want to save FM Model?") ==

@@ -5,7 +5,7 @@
 <body>
 <ul>
     <#list allClasses as class>
-        <li><a href="/${class.name?uncap_first}">See all ${class.name?uncap_first}s</a></li>
+        <li><a href="/${class.name?uncap_first}/all">See all ${class.name?uncap_first}s</a></li>
     </#list>
 </ul>
 </body>

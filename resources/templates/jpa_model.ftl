@@ -1,11 +1,26 @@
 package ${class.typePackage};
 
+<#if class.name=="MbrsGeneratedApplication">
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class ${class.name} {
+
+    public static void main(String[] args) {
+        SpringApplication.run(${class.name}.class, args);
+    }
+}
+<#else>
+
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -56,3 +71,4 @@ ${class.visibility} class ${class.name} {
 </#list>
 
 }
+</#if>

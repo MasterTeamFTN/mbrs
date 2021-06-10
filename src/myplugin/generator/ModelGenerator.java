@@ -31,23 +31,33 @@ public class ModelGenerator extends BasicGenerator {
 
 		List<FMClass> classes = FMModel.getInstance().getClasses();
 
+		boolean mainAdded = false;
 		for (int i = 0; i < classes.size(); i++) {
 			FMClass cl = classes.get(i);
 			Writer out;
 
 			Map<String, Object> context = new HashMap<String, Object>();
 			ArrayList<String> imports = new ArrayList<>();
-			//uzmem sve importe koji su vezani za atribute
-			//paket.naziv_klase
+
 			String import_str = "";
 			try {
+				if(!mainAdded) {
+					FMClass mainClass = new FMClass("MbrsGeneratedApplication", cl.getTypePackage().substring(0, cl.getTypePackage().indexOf(".")), "true");
+					out = getWriter(mainClass.getName(), mainClass.getTypePackage());
+					if (out != null) {
+						context.clear();
+						context.put("class", mainClass);
+						getTemplate().process(context, out);
+						out.flush();
+					}
+					mainAdded = true;
+				}
 				out = getWriter(cl.getName(), cl.getTypePackage());
 				if (out != null) {
 					context.clear();
 					context.put("class", cl);
 					context.put("properties", cl.getProperties());
 					context.put("importedPackages", cl.getImportedPackages());
-//					context.put("extendClass", cl.getBaseClassifier());
 					getTemplate().process(context, out);
 					out.flush();
 				}

@@ -4,6 +4,7 @@
     <title>Edit ${class.name}</title>
 </head>
 <body>
+<a href="javascript:history.back()">back</a>
 <#if class.page?? && class.page.update?c=="true">
     <div>
         <fieldset>

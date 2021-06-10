@@ -4,6 +4,7 @@
     <title>${class.name} Details</title>
 </head>
 <body>
+<a href="/index">home</a>
 <#if class.page?? && class.page.details?c=="true">
     <h1>${class.name} Details</h1>
     <div>
@@ -15,7 +16,16 @@
             <#list properties as property>
                 <tr>
                     <td>${property.name}</td>
-                    <td>${r"${"}${class.name?uncap_first}.${property.name}${r"}"}</td>
+                    <#if property.type.name == "Integer" || property.type.name == "String" || property.type.name == "Boolean">
+                        <td>${r"${"}${class.name?uncap_first}.${property.name}${r"}"}</td>
+                    <#else>
+                        <td>
+                            ${r"<#if "}${class.name?uncap_first}.${property.name}${r"?has_content?c=='false'>null"}
+                            ${r"<#else>"}
+                            ${r"${"}${class.name?uncap_first}.${property.name}.id${r"}"}
+                            ${r"</#if>"}
+                        </td>
+                    </#if>
                 </tr>
             </#list>
         </table>
