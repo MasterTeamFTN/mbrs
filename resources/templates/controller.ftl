@@ -69,7 +69,7 @@ public class ${class.name}GenController {
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
+    public String delete(@PathVariable Long id, Model model) throws Exception {
         ${class.name} entity = ${serviceName}.findById(id);
         ${serviceName}.delete(entity);
 
