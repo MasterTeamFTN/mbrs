@@ -16,35 +16,38 @@ Do not update it because if you run generator again you changes will be deleted
             <tr>
                 <th>id</th>
                 <#list properties as property>
-                    <th>${property.name}</th>
+                <th>${property.name}</th>
                 </#list>
                 <#if class.page.create?c=="true">
                 <th>Delete</th>
                 </#if>
             </tr>
             ${r'<#list '}${class.name?uncap_first}s as ${class.name?uncap_first}${r'>'}
-                <tr>
-                    <td>
-                        <a href="/${class.name?uncap_first}/${r"${"}${class.name?uncap_first}.id${r"}"}">${r"${"}${class.name?uncap_first}.id${r"}"}</a>
-                    </td>
-                    <#list properties as property>
-                        <#if property.type.name == "Integer" || property.type.name == "String" || property.type.name == "Boolean">
-                            <td>${r"${"}${class.name?uncap_first}.${property.name}${r"}"}</td>
-                        <#elseif property.type.name == "Date" || property.type.name == "date">
-                            <td>${r"${"}${class.name?uncap_first}.${property.name}?date${r"}"}</td>
-                        <#else>
-                            ${r"<#if "}${class.name?uncap_first}.${property.name}${r"?has_content?c=='false'><td>field is null</td>"}
-                            ${r"<#else>"}
-                            <td>${r"${"}${class.name?uncap_first}.${property.name}.id${r"}"}</td>
-                            ${r"</#if>"}
-                        </#if>
-                    </#list>
-                    <#if class.page.create?c=="true">
-                    <td>
-                        <a href="/${class.name?uncap_first}/delete/${r"${"}${class.name?uncap_first}.id${r"}"}">Delete</a>
-                    </td>
-                    </#if>
-                </tr>
+            <tr>
+                <td>
+                    <a href="/${class.name?uncap_first}/${r"${"}${class.name?uncap_first}.id${r"}"}">${r"${"}${class.name?uncap_first}.id${r"}"}</a>
+                </td>
+                <#list properties as property>
+                <#if property.type.name == "Integer" || property.type.name == "String">
+                    <td>${r"${"}${class.name?uncap_first}.${property.name}${r"}"}</td>
+                <#elseif property.type.name == "Boolean" || property.type.name == "boolean">
+                    <td>${r"${"}${class.name?uncap_first}.${property.name}?string${r"}"}</td>
+                <#elseif property.type.name == "Date" || property.type.name == "date">
+                    <td>${r"${"}${class.name?uncap_first}.${property.name}?date${r"}"}</td>
+                <#else>
+                    ${r"<#if "}${class.name?uncap_first}.${property.name}${r"?has_content?c=='false'>
+                        <td>field is null</td>"}
+                    ${r"<#else>"}
+                        <td>${r"${"}${class.name?uncap_first}.${property.name}.id${r"}"}</td>
+                    ${r"</#if>"}
+                </#if>
+                </#list>
+                <#if class.page.create?c=="true">
+                <td>
+                    <a href="/${class.name?uncap_first}/delete/${r"${"}${class.name?uncap_first}.id${r"}"}">Delete</a>
+                </td>
+                </#if>
+            </tr>
             ${r'</#list>'}
         </table>
         <#if class.page.create?c=="true">

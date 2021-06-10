@@ -12,5 +12,4 @@ import java.util.Date;
 
 @Repository
 public interface ${class.name}Repository extends JpaRepository<${class.name}, Long> {
-
 }
