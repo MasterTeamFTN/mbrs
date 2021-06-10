@@ -28,7 +28,7 @@ public class ${class.name}GenService {
     }
 
 </#if>
-<#if class.page.create?c=="true">
+<#if class.page.create?c=="true" || class.page.update?c=="true">
     public ${class.name} save(${class.name} ${class.name?uncap_first}) {
         return ${repositoryName}.save(${class.name?uncap_first})
     }
