@@ -18,27 +18,27 @@ Do not update it because if you run generator again you changes will be deleted
                 <td>${r"${"}${class.name?uncap_first}.id${r"}"}</td>
             </tr>
             <#list properties as property>
-                <tr>
-                    <td>${property.name}</td>
-                    <#if property.type.name == "Integer" || property.type.name == "String" || property.type.name == "Boolean">
-                        <td>${r"${"}${class.name?uncap_first}.${property.name}${r"}"}</td>
-                    <#elseif property.type.name == "Date" || property.type.name == "date">
-                        <td>${r"${"}${class.name?uncap_first}.${property.name}?date${r"}"}</td>
-                    <#else>
-                        <td>
-                            ${r"<#if "}${class.name?uncap_first}.${property.name}${r"?has_content?c=='false'>null"}
-                            ${r"<#else>"}
-                            ${r"${"}${class.name?uncap_first}.${property.name}.id${r"}"}
-                            ${r"</#if>"}
-                        </td>
-                    </#if>
-                </tr>
+            <tr>
+                <td>${property.name}</td>
+                <#if property.type.name == "Integer" || property.type.name == "String" || property.type.name == "Boolean">
+                <td>${r"${"}${class.name?uncap_first}.${property.name}${r"}"}</td>
+                <#elseif property.type.name == "Date" || property.type.name == "date">
+                <td>${r"${"}${class.name?uncap_first}.${property.name}?date${r"}"}</td>
+                <#else>
+                <td>
+                    ${r"<#if "}${class.name?uncap_first}.${property.name}${r"?has_content?c=='false'>
+                        null"}
+                    ${r"<#else>"}
+                        ${r"${"}${class.name?uncap_first}.${property.name}.id${r"}"}
+                    ${r"</#if>"}
+                </td>
+                </#if>
+            </tr>
             </#list>
         </table>
         <#if class.page.update?c=="true">
         <a href="/${class.name?uncap_first}/update/${r"${"}${class.name?uncap_first}.id${r"}"}">Update ${class.name?uncap_first}</a>
         </#if>
-
         <a href="/${class.name?uncap_first}/delete/${r"${"}${class.name?uncap_first}.id${r"}"}">Delete ${class.name?uncap_first}</a>
     </div>
 <#else>

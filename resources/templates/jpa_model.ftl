@@ -14,7 +14,6 @@ public class ${class.name} {
     }
 }
 <#else>
-
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
@@ -58,7 +57,6 @@ ${class.visibility} class ${class.name} {
     </#if>
     ${property.visibility} <#if property.type.name == "date" > Date <#else>${property.type.name} </#if><#if property.name != "" > ${property.name} <#else> ${property.type.name?uncap_first}</#if>;
 
-
     <#elseif property.upper == -1 >
     <#--    Ako je upper -1, u pitanju je neka kolekcija kao polje, Ako se stavi i shared, onda je manyToMany   -->
         <#if property.referenceType =="shared">
@@ -75,6 +73,5 @@ ${class.visibility} class ${class.name} {
         </#list>
     </#if>
 </#list>
-
 }
 </#if>

@@ -21,7 +21,7 @@ Do not update it because if you run generator again you changes will be deleted
             <#elseif property.type.name == "String">
                 ${property.name?cap_first}: <input type="text" name="${property.name}" /><br/>
             <#elseif property.type.name == "Boolean" >
-                ${property.name?cap_first}: <input type="checkbox" name="${property.name}" id="${property.name}">
+            ${property.name?cap_first}: <input type="checkbox" name="${property.name}" id="${property.name}">
             <#elseif property.type.name == "Date" || property.type.name == "date">
                 ${property.name?cap_first}: <input type="date" name="${property.name}" id="${property.name}" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"/><br />
             <#else>
