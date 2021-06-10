@@ -30,6 +30,8 @@ Do not update it because if you run generator again you changes will be deleted
                     <#list properties as property>
                         <#if property.type.name == "Integer" || property.type.name == "String" || property.type.name == "Boolean">
                             <td>${r"${"}${class.name?uncap_first}.${property.name}${r"}"}</td>
+                        <#elseif property.type.name == "Date" || property.type.name == "date">
+                            <td>${r"${"}${class.name?uncap_first}.${property.name}?date${r"}"}</td>
                         <#else>
                             ${r"<#if "}${class.name?uncap_first}.${property.name}${r"?has_content?c=='false'><td>field is null</td>"}
                             ${r"<#else>"}

@@ -19,6 +19,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -52,6 +53,9 @@ ${class.visibility} class ${class.name} {
         </#if>
         <#-- Date se ispisuje kao date, zato ovde ova provera sa if property.type.name==date-->
 <#--        ${property.visibility} <#if property.type.name == "date" > Date <#else>${property.type.name} </#if>  ${property.name};-->
+    <#if property.type.name == "date" ||  property.type.name == "Date">
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    </#if>
     ${property.visibility} <#if property.type.name == "date" > Date <#else>${property.type.name} </#if><#if property.name != "" > ${property.name} <#else> ${property.type.name?uncap_first}</#if>;
 
 
