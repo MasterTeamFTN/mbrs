@@ -37,9 +37,21 @@ public class ${class.name}GenController {
     }
     </#if>
 
-    <#if class.page.getAll?c=="true">
+    <#if class.page.create?c=="true">
     @PostMapping("/add")
     public String create(@ModelAttribute ${class.name}(${class.name?uncap_first}) ${class.name?uncap_first}, BindingResult result, ModelMap model) {
+        if (result.hasErrors()) {
+            return "error";
+        }
+
+        ${class.name} result = ${serviceName}.save(${class.name?uncap_first});
+        model.addAttribute("${class.name?uncap_first}", result);
+        return "${class.name?uncap_first}-by-id";
+    }
+    </#if>
+    <#if class.page.update?c=="true">
+    @PostMapping("/update/{id}")
+    public String update(@ModelAttribute ${class.name}(${class.name?uncap_first}) ${class.name?uncap_first}, BindingResult result, ModelMap model) {
         if (result.hasErrors()) {
             return "error";
         }
