@@ -42,7 +42,7 @@ public class ControllerGenerator extends BasicGenerator {
 			try {
 				// Creating home controller
 				if(!homeAdded) {
-					FMClass home = new FMClass("Home", "mbrs.controller", "true");
+					FMClass home = new FMClass("Home", cl.getTypePackage(), "true");
 					out = getWriter(home.getName(), home.getTypePackage());
 					if (out != null) {
 						context.clear();
