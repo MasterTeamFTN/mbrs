@@ -28,8 +28,10 @@ Do not update it because if you run generator again you changes will be deleted
                     <a href="/${class.name?uncap_first}/${r"${"}${class.name?uncap_first}.id${r"}"}">${r"${"}${class.name?uncap_first}.id${r"}"}</a>
                 </td>
                 <#list properties as property>
-                <#if property.type.name == "Integer" || property.type.name == "String" || property.type.name == "Boolean">
+                <#if property.type.name == "Integer" || property.type.name == "String">
                     <td>${r"${"}${class.name?uncap_first}.${property.name}${r"}"}</td>
+                <#elseif property.type.name == "Boolean" || property.type.name == "boolean">
+                    <td>${r"${"}${class.name?uncap_first}.${property.name}?string${r"}"}</td>
                 <#elseif property.type.name == "Date" || property.type.name == "date">
                     <td>${r"${"}${class.name?uncap_first}.${property.name}?date${r"}"}</td>
                 <#else>
