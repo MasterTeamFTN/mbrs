@@ -32,6 +32,8 @@
         <#if class.page.update?c=="true">
         <a href="/${class.name?uncap_first}/update/${r"${"}${class.name?uncap_first}.id${r"}"}">Update ${class.name?uncap_first}</a>
         </#if>
+
+        <a href="/${class.name?uncap_first}/delete/${r"${"}${class.name?uncap_first}.id${r"}"}">Delete ${class.name?uncap_first}</a>
     </div>
 <#else>
 </#if>

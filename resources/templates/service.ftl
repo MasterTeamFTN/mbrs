@@ -33,6 +33,10 @@ public class ${class.name}GenService {
         return ${repositoryName}.save(${class.name?uncap_first});
     }
 
+    public void delete(${class.name} ${class.name?uncap_first}) {
+        ${repositoryName}.delete(${class.name?uncap_first});
+    }
+
 </#if>
 </#if>
 }

@@ -67,6 +67,16 @@ public class ${class.name}GenController {
         model.addAttribute("${class.name?uncap_first}", saved${class.name});
         return "${class.name}";
     }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id, Model model) throws Exception {
+        ${class.name} entity = ${serviceName}.findById(id);
+        ${serviceName}.delete(entity);
+
+        List<${class.name}> ${class.name?uncap_first}s = ${serviceName}.findAll();
+        model.addAttribute("${class.name?uncap_first}s", ${class.name?uncap_first}s);
+        return "${class.name}s";
+    }
     </#if>
     <#if class.page.update?c=="true">
 
