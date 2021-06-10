@@ -14,6 +14,9 @@
                 <#list properties as property>
                     <th>${property.name}</th>
                 </#list>
+                <#if class.page.create?c=="true">
+                <th>Delete</th>
+                </#if>
             </tr>
             ${r'<#list '}${class.name?uncap_first}s as ${class.name?uncap_first}${r'>'}
                 <tr>
@@ -30,6 +33,11 @@
                             ${r"</#if>"}
                         </#if>
                     </#list>
+                    <#if class.page.create?c=="true">
+                    <td>
+                        <a href="/${class.name?uncap_first}/delete/${r"${"}${class.name?uncap_first}.id${r"}"}">Delete</a>
+                    </td>
+                    </#if>
                 </tr>
             ${r'</#list>'}
         </table>
