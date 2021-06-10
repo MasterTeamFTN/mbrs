@@ -31,6 +31,7 @@ public class ControllerGenerator extends BasicGenerator {
 
 		List<FMClass> classes = FMModel.getInstance().getClasses();
 
+		boolean homeAdded = false;
 		for (int i = 0; i < classes.size(); i++) {
 			FMClass cl = classes.get(i);
 			Writer out;
@@ -39,6 +40,19 @@ public class ControllerGenerator extends BasicGenerator {
 			ArrayList<String> imports = new ArrayList<>();
 			String import_str = "";
 			try {
+				// Creating home controller
+				if(!homeAdded) {
+					FMClass home = new FMClass("Home", "mbrs.controller", "true");
+					out = getWriter(home.getName(), home.getTypePackage());
+					if (out != null) {
+						context.clear();
+						context.put("class", home);
+						getTemplate().process(context, out);
+						out.flush();
+					}
+					homeAdded = true;
+				}
+				// Logic for rest of the controllers
 				if(cl.getPage() != null) {
 					out = getWriter(cl.getName(), cl.getTypePackage());
 					if (out != null) {

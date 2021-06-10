@@ -2,8 +2,8 @@
 package ${class.typePackage};
 
 import lombok.RequiredArgsConstructor;
-import ${class.typePackage}.model.${class.name};
-import ${class.typePackage}.repository.${class.name}Repository;
+import ${class.typePackage?keep_before(".")}.model.${class.name};
+import ${class.typePackage?keep_before(".")}.repository.${class.name}Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +15,8 @@ public class ${class.name}GenService {
 <#if class.page??>
     private final ${class.name?cap_first}Repository ${repositoryName};
 
-<#if class.page.details?c=="true">
-    public ${class.name} findById(Long id) {
+<#if class.page.details?c=="true" || class.page.update?c=="true">
+    public ${class.name} findById(Long id) throws Exception {
         return ${repositoryName}.findById(id)
             .orElseThrow(() -> new Exception("${class.name?uncap_first}-not-found"));
     }
@@ -24,13 +24,13 @@ public class ${class.name}GenService {
 </#if>
 <#if class.page.getAll?c=="true">
     public List<${class.name}> findAll() {
-        return ${repositoryName}.findAll()
+        return ${repositoryName}.findAll();
     }
 
 </#if>
 <#if class.page.create?c=="true" || class.page.update?c=="true">
     public ${class.name} save(${class.name} ${class.name?uncap_first}) {
-        return ${repositoryName}.save(${class.name?uncap_first})
+        return ${repositoryName}.save(${class.name?uncap_first});
     }
 
 </#if>

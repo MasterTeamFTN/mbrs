@@ -26,13 +26,6 @@ public class MyPlugin extends com.nomagic.magicdraw.plugins.Plugin {
 		/** @Todo: load project options (@see myplugin.generator.options.ProjectOptions) from
 		 * ProjectOptions.xml and take ejb generator options */
 
-		//for test purpose only:
-//		GeneratorOptions ejbOptions = new GeneratorOptions("c:/temp", "jpaclass", "templates", "{0}.java", true, "ejebiga");
-//		ProjectOptions.getProjectOptions().getGeneratorOptions().put("EJBGenerator", ejbOptions);
-//
-//		ejbOptions.setTemplateDir(pluginDir + File.separator + ejbOptions.getTemplateDir()); //apsolutna putanja
-
-
 		modelOptions();
 		repositoryOptions();
 		serviceOptions();
@@ -90,29 +83,27 @@ public class MyPlugin extends com.nomagic.magicdraw.plugins.Plugin {
 //	}
 
 	private void listFtlOptions() {
-		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/resources", "list_page", "templates", "{0}s.ftl", true, "webapp");
+		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/resources", "list_page", "templates", "{0}s.ftlh", true, "webapp");
 		ProjectOptions.getProjectOptions().getGeneratorOptions().put("ListFreemarkerGenerator", generatorOptions);
 		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
 	}
-
 	private void indexFtlOptions() {
-		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/resources", "index_page", "templates", "{0}.ftl", true, "webapp");
+		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/resources", "index_page", "templates", "{0}.ftlh", true, "webapp");
 		ProjectOptions.getProjectOptions().getGeneratorOptions().put("IndexFreemarkerGenerator", generatorOptions);
 		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
 	}
-
 	private void detailFtlOptions() {
-		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/resources", "details_page", "templates", "{0}.ftl", true, "web");
+		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/resources", "details_page", "templates", "{0}.ftlh", true, "web");
 		ProjectOptions.getProjectOptions().getGeneratorOptions().put("DetailFreemarkerGenerator", generatorOptions);
 		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
 	}
 	private void editFtlOptions() {
-		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/resources", "edit_page", "templates", "Edit{0}.ftl", true, "web");
+		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/resources", "edit_page", "templates", "Edit{0}.ftlh", true, "web");
 		ProjectOptions.getProjectOptions().getGeneratorOptions().put("EditFreemarkerGenerator", generatorOptions);
 		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
 	}
 	private void createFtlOptions() {
-		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/resources", "add_page", "templates", "Create{0}.ftl", true, "web");
+		GeneratorOptions generatorOptions = new GeneratorOptions("c:/Temp/mbrs/mbrs/src/main/resources", "add_page", "templates", "Create{0}.ftlh", true, "web");
 		ProjectOptions.getProjectOptions().getGeneratorOptions().put("CreateFreemarkerGenerator", generatorOptions);
 		generatorOptions.setTemplateDir(pluginDir + File.separator + generatorOptions.getTemplateDir());
 	}
