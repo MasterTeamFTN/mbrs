@@ -15,7 +15,7 @@ a:link, a:visited {
     text-decoration: none;
     display: inline-block;
     max-width: fit-content;
-    margin-right: 20px;
+    margin: 5px;
 }
 .wrapper {
     display: flex;
