@@ -4,13 +4,20 @@ Do not update it because if you run generator again you changes will be deleted
 -->
 <html>
 <head>
-    <h1>Generated application</h1>
+    <style>
+        ${r"<#include 'common.css'>"}
+    </style>
 </head>
 <body>
-<ul>
-    <#list allClasses as class>
-        <li><a href="/${class.name?uncap_first}/all">See all ${class.name?uncap_first}s</a></li>
-    </#list>
-</ul>
+<header>
+    <h2>Generated application</h2>
+</header>
+<div class="wrapper">
+    <ul>
+        <#list allClasses as class>
+            <li><a href="/${class.name?uncap_first}/all">See all ${class.name?uncap_first}s</a></li>
+        </#list>
+    </ul>
+</div>
 </body>
 </html>

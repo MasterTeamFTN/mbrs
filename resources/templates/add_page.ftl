@@ -6,11 +6,17 @@ Do not update it because if you run generator again you changes will be deleted
 <html>
 <head>
     <title>Create ${class.name}</title>
+    <style>
+        ${r"<#include 'common.css'>"}
+    </style>
 </head>
 <body>
-<a href="javascript:history.back()">back</a>
+<header>
+    <a href="javascript:history.back()">back</a>
+    <h2>New ${class.name}</h2>
+</header>
 <#if class.page?? && class.page.create?c=="true">
-    <div>
+    <div class="wrapper">
         <fieldset>
             <legend>New ${class.name}</legend>
             <form name="product" action="${r"${springMacroRequestContext.getContextPath()}"}/${class.name?uncap_first}/add" method="post">

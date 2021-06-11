@@ -56,9 +56,8 @@ class GenerateAction extends MDAction{
 			generateRepositories(analyzer, root, generatorOptions, packageName, javaOutputPath);
 			generateServices(analyzer, root, generatorOptions, packageName, javaOutputPath);
 			generateControllers(analyzer, root, generatorOptions, packageName, javaOutputPath);
-//			generateJsp(analyzer, root, generatorOptions);
-//			generateHome(analyzer, root, generatorOptions);
-//			generateDetails(analyzer, root, generatorOptions);
+
+			generateCss(analyzer, root, generatorOptions, templatesOutputpath);
 			generateIndexFreemarker(analyzer, root, generatorOptions, templatesOutputpath);
 			generateListFreemarker(analyzer, root, generatorOptions, templatesOutputpath);
 			generateDetailsFreemarker(analyzer, root, generatorOptions, templatesOutputpath);
@@ -134,42 +133,6 @@ class GenerateAction extends MDAction{
 		controllerGenerator.generate();
 	}
 
-//	private void generateHome(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions)
-//			throws AnalyzeException {
-//		analyzer = new ModelAnalyzer(root, "WEB-INF");
-//		analyzer.prepareModel();
-//		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("HomeJspGenerator");
-//		HomeJspGenerator controllerGenerator = new HomeJspGenerator(generatorOptions);
-//		controllerGenerator.generate();
-//		JOptionPane.showMessageDialog(null, "(HOME JSP): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
-//				", package: " + generatorOptions.getFilePackage());
-//		exportToXml();
-//	}
-//
-//	private void generateJsp(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions)
-//			throws AnalyzeException {
-//		analyzer = new ModelAnalyzer(root, "WEB-INF.jsp.list");
-//		analyzer.prepareModel();
-//		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("JspGenerator");
-//		JspGenerator controllerGenerator = new JspGenerator(generatorOptions);
-//		controllerGenerator.generate();
-//		JOptionPane.showMessageDialog(null, "(JSP): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
-//				", package: " + generatorOptions.getFilePackage());
-//		exportToXml();
-//	}
-//
-//	private void generateDetails(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions)
-//			throws AnalyzeException {
-//		analyzer = new ModelAnalyzer(root, "WEB-INF.jsp.detail");
-//		analyzer.prepareModel();
-//		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("DetailJspGenerator");
-//		DetailJspGenerator controllerGenerator = new DetailJspGenerator(generatorOptions);
-//		controllerGenerator.generate();
-//		JOptionPane.showMessageDialog(null, "(DETAIL JSP): Code is successfully generated! Generated code is in folder: " + generatorOptions.getOutputPath() +
-//				", package: " + generatorOptions.getFilePackage());
-//		exportToXml();
-//	}
-
 	private void generateIndexFreemarker(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions, String outputPath)
 			throws AnalyzeException {
 		analyzer = new ModelAnalyzer(root, "templates");
@@ -228,6 +191,14 @@ class GenerateAction extends MDAction{
 //		exportToXml();
 	}
 
+	private void generateCss(ModelAnalyzer analyzer, Package root, GeneratorOptions generatorOptions, String outputPath)
+			throws AnalyzeException {
+		analyzer = new ModelAnalyzer(root, "templates");
+		analyzer.prepareModel();
+		generatorOptions = ProjectOptions.getProjectOptions().getGeneratorOptions().get("CssGenerator");
+		CssGenerator cssGenerator = new CssGenerator(generatorOptions, outputPath);
+		cssGenerator.generate();
+	}
 
 	private void exportToXml() {
 		if (JOptionPane.showConfirmDialog(null, "Do you want to save FM Model?") ==

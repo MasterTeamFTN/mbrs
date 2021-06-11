@@ -6,12 +6,17 @@ Do not update it because if you run generator again you changes will be deleted
 <html>
 <head>
     <title>${class.name} Details</title>
+    <style>
+        ${r"<#include 'common.css'>"}
+    </style>
 </head>
 <body>
-<a href="/index">home</a>
+<header>
+    <a href="/index">home</a>
+    <h2>${class.name} Details</h2>
+</header>
 <#if class.page?? && class.page.details?c=="true">
-    <h1>${class.name} Details</h1>
-    <div>
+    <div class="wrapper">
         <table border="1">
             <tr>
                 <td>id</td>
@@ -37,11 +42,17 @@ Do not update it because if you run generator again you changes will be deleted
                 </#if>
             </tr>
             </#list>
+            <#if class.page.update?c=="true">
+                <tr>
+                    <td>Update</td>
+                    <td><a href="/${class.name?uncap_first}/update/${r"${"}${class.name?uncap_first}.id${r"}"}">Update ${class.name?uncap_first}</a></td>
+                </tr>
+            </#if>
+            <tr>
+                <td>Delete</td>
+                <td><a href="/${class.name?uncap_first}/delete/${r"${"}${class.name?uncap_first}.id${r"}"}">Delete ${class.name?uncap_first}</a></td>
+            </tr>
         </table>
-        <#if class.page.update?c=="true">
-        <a href="/${class.name?uncap_first}/update/${r"${"}${class.name?uncap_first}.id${r"}"}">Update ${class.name?uncap_first}</a>
-        </#if>
-        <a href="/${class.name?uncap_first}/delete/${r"${"}${class.name?uncap_first}.id${r"}"}">Delete ${class.name?uncap_first}</a>
     </div>
 <#else>
 </#if>
